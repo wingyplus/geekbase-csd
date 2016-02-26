@@ -11,6 +11,17 @@
     - apt: update_cache=yes
     - name: install jenkins
       apt: pkg=jenkins state=present
+    - file: path=/usr/share/jenkins/ref/plugins state=directory
+    - apt: pkg=unzip state=present
+    - name: install jenkins plugins
+      get_url: url=https://updates.jenkins-ci.org/download/plugins/{{ item }}/latest/{{ item }}.hpi dest=/var/lib/jenkins/plugins/{{ item }}.jpi
+      with_items:
+        - greenballs
+        - ansicolor
+        - robot
+        - xvfb
+    - name: restart jenkins
+      service: name=jenkins state=restarted
     - name: install python pip
       apt: pkg=python-pip state=present
     - name: install robotframework and selenium library
