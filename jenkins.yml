@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: setup mirror
+      copy: src=./sources.list dest=/etc/apt/sources.list mode=644
+    - apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+    - name: setup jenkins mirror
+      copy: src=./jenkins/jenkins.list dest=/etc/apt/sources.list.d/jenkins.list mode=644
+    - apt: update_cache=yes
+    - name: install jenkins
+      apt: pkg=jenkins state=present
+    - name: install python pip
+      apt: pkg=python-pip state=present
+    - name: install robotframework and selenium library
+      pip: name={{ item }}
+      with_items:
+        - robotframework
+        - robotframework-selenium2library
