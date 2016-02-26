@@ -5,7 +5,12 @@
   tasks:
     - name: setup mirror
       copy: src=./sources.list dest=/etc/apt/sources.list mode=644
-    - apt_key: url=https://jenkins-ci.org/debian/jenkins-ci.org.key state=present
+    - apt_key: url={{ item }} state=present
+      with_items:
+        - https://jenkins-ci.org/debian/jenkins-ci.org.key
+        - https://dl.google.com/linux/linux_signing_key.pub
+    - name: setup chrome mirror
+      copy: src=./jenkins/chrome.list dest=/etc/apt/sources.list.d/chrome.list mode=644
     - name: setup jenkins mirror
       copy: src=./jenkins/jenkins.list dest=/etc/apt/sources.list.d/jenkins.list mode=644
     - apt: update_cache=yes
@@ -31,3 +36,5 @@
       with_items:
         - robotframework
         - robotframework-selenium2library
+    - name: install google chrome
+      apt: pkg=google-chrome-stable state=present
