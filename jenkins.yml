@@ -20,8 +20,10 @@
         - ansicolor
         - robot
         - xvfb
+      register: plugins
     - name: restart jenkins
       service: name=jenkins state=restarted
+      when: plugins.changed
     - name: install python pip
       apt: pkg=python-pip state=present
     - name: install robotframework and selenium library
