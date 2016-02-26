@@ -21,3 +21,7 @@ end
 describe package("google-chrome-stable") do
   it { should be_installed }
 end
+
+describe package("xvfb") do
+  it { should be_installed }
+end
