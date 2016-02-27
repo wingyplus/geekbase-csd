@@ -44,3 +44,9 @@
       with_items:
         - google-chrome-stable
         - xvfb
+    - name: install chrome driver
+      unarchive:
+        src: http://chromedriver.storage.googleapis.com/2.21/chromedriver_linux64.zip
+        dest: /usr/bin
+        copy: no
+        mode: 0511
