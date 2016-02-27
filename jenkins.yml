@@ -20,7 +20,9 @@
     - file: path=/usr/share/jenkins/ref/plugins state=directory
     - apt: pkg=unzip state=present
     - name: install jenkins plugins
-      get_url: url=https://updates.jenkins-ci.org/download/plugins/{{ item }}/latest/{{ item }}.hpi dest=/var/lib/jenkins/plugins/{{ item }}.jpi
+      get_url:
+        url: https://updates.jenkins-ci.org/download/plugins/{{ item }}/latest/{{ item }}.hpi
+        dest: /var/lib/jenkins/plugins/{{ item }}.jpi
       with_items:
         - greenballs
         - ansicolor
